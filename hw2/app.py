@@ -21,7 +21,8 @@ app.add_url_rule('/quotes',
                  methods=['GET'])
 
 app.add_url_rule('/insert',
-                 view_func=Insert.as_view('insert'))
+                 view_func=Insert.as_view('insert'),
+                 methods=['GET', 'POST'])
 
 
 if __name__=='__main__':

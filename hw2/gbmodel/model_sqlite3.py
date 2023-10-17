@@ -16,7 +16,7 @@ Created with SQL:
 
 from .Model import Model
 import sqlite3
-DB_FILE = 'quote_library.db'
+DB_FILE = 'quote_library.sqlite'
 
 
 class model(Model):
@@ -56,10 +56,11 @@ class model(Model):
         :return: True
         """
         parameters = {'quote':quote, 'person':person, 'source':source, 'rating':rating}
+        print(type(rating))
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         try:
-             cursor.execute("INSERT INTO quotes (quote, person, source, rating) VALUES (:name, :email, :date, :message)", parameters)
+             cursor.execute("INSERT INTO quote_library (quote, person, source, rating) VALUES (:quote, :person, :source, :rating)", parameters)
         except sqlite3.OperationalError as error:
             print(error)
 

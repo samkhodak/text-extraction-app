@@ -8,13 +8,14 @@ class Insert(MethodView):
     A class derived from MethodView to represent a presenter for the insert.html view. 
     """
     def get(self):
-      """ Renders the insert.html page."""
-      return render_template('insert.html')
+        """ Renders the insert.html page."""
+        return render_template('insert.html')
   
     def post(self):
         """
-        Processes the POST request from the form, then redirects to index. 
+        Processes the POST request from the form and inserts it into the database; 
+        Redirects to index. 
         """
         model = gbmodel.get_model()
-        # model.insert_quote("To be or not to be...", "William Shakespeare", "Hamlet", 9)
+        model.insert_quote(request.form['quote'], request.form['person'], request.form['source'], int(request.form['rating']))
         return redirect(url_for('index'))
