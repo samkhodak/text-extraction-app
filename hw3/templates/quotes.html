@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="title">All entered quotes</h1>
+    
+    {% if (quotes) %}
+        {% for entry in quotes %}
+            <div class="quote-card">
+                <p class="person">{{entry.person}} &nbsp; — &nbsp; {{entry.source}}</h2>
+                <p class="quote">{{entry.quote}}</p>
+                <p class="rating">Rating: {{entry.rating}}/10</p>
+            </div>
+        {% endfor %}
+    {% else %}
+            <h2>Nothing here yet!</h2>
+    {% endif %}
+
+
+{% endblock %}

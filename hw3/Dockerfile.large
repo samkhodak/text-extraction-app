@@ -1,0 +1,27 @@
+# Ubuntu 'large' dockerfile.
+
+# Specifies base layer for the OS of the container
+FROM ubuntu:20.04
+
+# Specifies the current maintainer of the dockerfile. This command is not necessary. 
+LABEL maintainer="khod2@pdx.edu"
+
+# Installs python on the container
+RUN apt-get update -y
+RUN apt-get install -y python3-pip 
+
+# Copies quotes app files from the hw2 folder to the /app directory inside the container.
+COPY . /app
+
+# Sets the working directory for your app inside the container
+WORKDIR /app
+
+# Install python packages from the requirements file in the container
+RUN pip install -r requirements.txt
+
+# Entrypoint starts up the python3 program and closes the container when the program 
+# finishes execution.
+ENTRYPOINT ["python3"]
+
+# Set what program to execute when the container starts up, similar to entrypoint.
+CMD ["app.py"]
