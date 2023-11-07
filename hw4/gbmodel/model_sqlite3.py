@@ -3,14 +3,14 @@ SQL model for a quote_library webapp.
 
 Schema for the SQLite database:
 
-+-------------------------+---------------------+--------+--------+
-| Quote                   | Person              | Source | Rating |
-+=========================+=====================+========+========+
-| "To be or not to be..." | William Shakespeare | Hamlet | 9      |
-+-------------------------+---------------------+--------+--------+
++---------------------+--------+--------+-------------------------+
+| Person              | Source | Rating | Quote                   |
++=====================+========+========+=========================+
+| William Shakespeare | Hamlet | 9      | "To be or not to be..." |
++---------------------+--------+--------+-------------------------+
 
 Created with SQL: 
-    CREATE TABLE quote_library (quote TEXT, person TEXT, source TEXT, rating INTEGER);
+    CREATE TABLE quote_library (person TEXT, source TEXT, rating INTEGER, quote TEXT);
 
 """
 
@@ -29,7 +29,7 @@ class model(Model):
         try:
             cursor.execute("SELECT COUNT(rowid) FROM quote_library")
         except sqlite3.OperationalError:
-            cursor.execute("CREATE TABLE quote_library (quote TEXT, person TEXT, source TEXT, rating INTEGER)")
+            cursor.execute("CREATE TABLE quote_library (person TEXT, source TEXT, rating INTEGER, quote TEXT)")
         cursor.close()
 
     def select_quotes(self):
@@ -46,21 +46,20 @@ class model(Model):
             print (error)
         return cursor.fetchall()
     
-    def insert_quote(self, quote, person, source, rating):
+    def insert_quote(self, person, source, rating, quote):
         """
         Inserts quote into database, using Model's parameters. 
-        :param quote: String
         :param person: String
         :param source: String 
         :param rating: int
+        :param quote: String
         :return: True
         """
-        parameters = {'quote':quote, 'person':person, 'source':source, 'rating':rating}
-        print(type(rating))
+        parameters = {'person':person, 'source':source, 'rating':rating, 'quote':quote, }
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         try:
-             cursor.execute("INSERT INTO quote_library (quote, person, source, rating) VALUES (:quote, :person, :source, :rating)", parameters)
+             cursor.execute("INSERT INTO quote_library (person, source, rating, quote) VALUES (:person, :source, :rating, :quote, )", parameters)
         except sqlite3.OperationalError as error:
             print(error)
 

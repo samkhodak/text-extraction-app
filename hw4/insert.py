@@ -17,5 +17,5 @@ class Insert(MethodView):
         Redirects to index. 
         """
         model = gbmodel.get_model()
-        model.insert_quote(request.form['quote'], request.form['person'], request.form['source'], int(request.form['rating']))
+        model.insert_quote(request.form['person'], request.form['source'], int(request.form['rating']), request.form['quote'])
         return redirect(url_for('index'))

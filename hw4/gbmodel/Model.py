@@ -5,7 +5,7 @@ class Model():
         :return: A list of all rows in the database
         """
 
-    def insert_quote(self, quote, person, source, rating):
+    def insert_quote(self, person, source, rating, quote):
         """
         Inserts quote into database
         :param quote: Original quote.

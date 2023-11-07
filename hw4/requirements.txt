@@ -1,1 +1,8 @@
+# Web framework
 flask
+
+# GCP Datastore library
+google-cloud-datastore 
+
+# Python HTTP server we need to run with our docker file
+gunicorn
