@@ -63,8 +63,9 @@
 }
 
 /* Insert styles */
-.form {
-    max-width: 30rem;
+.form-container {
+    margin: 0 auto;
+    width: clamp(380px, 100%, 30rem);
 }
 
 .form-card {

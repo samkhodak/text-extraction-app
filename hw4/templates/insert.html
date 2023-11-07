@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div>
+    <div class="form-container">
         <h1 class="title">Add a quote to the library</h1>
 
-        <form action="{{ url_for('insert') }}" method="post" class="form">
+        <form action="{{ url_for('insert') }}" method="post">
             <div class="form-card">
                 <label for="person" class="form-label">Author of the quote</label>
                 <input type="text" id = "person" class="form-input" name="person" required>
