@@ -15,9 +15,22 @@
     border-radius: 1rem;
     width: 50vw;
     max-width: 50rem;
+    min-width: 30rem;
     min-height: 50rem;
     margin: auto;
     padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.home-footer {
+    display: flex;
+    justify-content: end;
+}
+
+.home-link {
+    margin: 0;
 }
 
 .title {

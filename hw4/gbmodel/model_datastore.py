@@ -25,7 +25,6 @@ def entity_to_list(entity):
     # and set it to be the entity we use.
     if isinstance(entity, list):
         entity = entity.pop()
-    print(entity)
     return [ entity['person'], entity['source'], entity['rating'], entity['quote'] ]
 
 

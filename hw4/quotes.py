@@ -15,8 +15,7 @@ class Quotes(MethodView):
         """
         model = gbmodel.get_model()
         tuple_list = model.select_quotes()
-        print(tuple_list)
+        # print(*tuple_list, sep='\n')
         quote_dict_list = [dict(person=row[0], source=row[1], rating=row[2], quote=row[3]) for row in tuple_list]
-        print(quote_dict_list)
 
         return render_template('quotes.html', quotes=quote_dict_list)

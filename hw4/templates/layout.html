@@ -9,6 +9,9 @@
 <body>
     <main class="main">
         {% block content %}{% endblock %}
+        <div class="home-footer">
+            <h3 class="home-link"><a class="main-link" href="{{url_for('index')}}">Home</a></h3>
+        </div>
     </main> 
 </body>
 </html>
