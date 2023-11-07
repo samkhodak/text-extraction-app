@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="title">Add a quote to the library</h1>
+
+    <form action="{{ url_for('insert') }}" method="post" class="form">
+        <div class="form-card">
+            <label for="person" class="form-label">Author of the quote</label>
+            <input type="text" id = "person" class="form-input" name="person" required>
+        </div>
+
+        <div class="form-card">
+            <label for="source" class="form-label">Media source of the quote</label>
+            <input type="text" id = "source" class="form-input" name="source" required>
+        </div>
+
+        <div class="form-card">
+            <label for="quote" class="form-label">Enter the quote</label>
+            <textarea id="quote" class="form-input" name="quote" required></textarea>
+        </div>
+
+        <div class="form-card">
+            <label for="rating" class="form-label">Rate this quote out of 10</label>
+            <input type="number" id="rating" class="form-input" name="rating" min="1" max="10" required>
+        </div>
+
+        <div class="button-row">
+            <button type="submit" class="button">Add it!</button>
+            <button type="reset" class="button">Reset</button>
+        </div>
+    </form>
+{% endblock %}
