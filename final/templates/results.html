@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div>
+        <h1 class="title">Results for conversion</h1>
+
+        <label for="quote" class="form-label">Output</label>
+
+        <img id="original-image" src="data:image/png;base64, {{ original_image }}">
+    </div>
+{% endblock %}

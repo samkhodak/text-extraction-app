@@ -1,0 +1,117 @@
+/* Main page styles */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.main {
+    /* background-color: #223843; */
+    background-color: #304662;
+    color: whitesmoke;
+    border: 3px solid;
+    border-radius: 1rem;
+    width: 50vw;
+    max-width: 50rem;
+    min-width: 30rem;
+    min-height: 50rem;
+    margin: auto;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.home-footer {
+    display: flex;
+    justify-content: end;
+}
+
+.home-link {
+    margin: 0;
+}
+
+.title {
+    margin: 1rem 0 3rem;
+}
+
+.main-link {
+    color: white;
+    text-decoration: none;
+    transition: transform 100ms;
+    display: inline-block;
+
+    &:visited {
+        color: lightgray;
+    }
+
+    &:hover {
+        transform: scale(1.03);
+        text-decoration: underline;
+    }
+}
+
+/* Quotes styles */
+.quote-card {
+    padding: 0.5rem 0 2rem;
+}
+
+.person {
+    font-size: 1.3rem;
+}
+
+/* Insert styles */
+.form-container {
+    margin: 0 auto;
+    width: clamp(380px, 100%, 30rem);
+}
+
+.form-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    color: white;
+    width: auto;
+    margin: 0.5rem 0 2rem;
+    padding: 0.5rem;
+    border: solid 1px #3D587B;
+    /* border: none; */
+    border-radius: 3px;
+    background-color: #283A52;
+
+    &:focus {
+        background-color: #1B2737;
+        transition: ease-in-out 400ms;
+    }
+}
+
+.form-label {
+    font-size: 1.3rem;
+}
+
+.button-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    color: white;
+    font-size: 1.4rem;
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #3D587B;
+    border-radius: 3px;
+    border: 2px solid #283A52;
+
+    &:hover {
+        background-color: #2F4460;
+        border-color: white;
+        transition: ease-in-out 100ms;
+    }
+}
