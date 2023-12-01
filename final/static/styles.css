@@ -93,6 +93,7 @@
 
 .form-label {
     font-size: 1.3rem;
+    display: block;
 }
 
 .button-row {
@@ -114,4 +115,9 @@
         border-color: white;
         transition: ease-in-out 100ms;
     }
+}
+
+
+#original-image {
+    max-width: 80%;
 }

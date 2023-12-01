@@ -3,8 +3,14 @@
     <div>
         <h1 class="title">Results for conversion</h1>
 
-        <label for="quote" class="form-label">Output</label>
-
+        <label for="original-image" class="form-label">Output</label>
         <img id="original-image" src="data:image/png;base64, {{ original_image }}">
+
+        <div class="quote-card">
+            <h2 class="person">Extracted Text</h2>
+            <div class="result-container">
+                <p class="result-text">{{original_extracted_text}}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
