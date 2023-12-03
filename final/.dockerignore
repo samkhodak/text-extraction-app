@@ -1,0 +1,5 @@
+__pycache__
+env
+flask_session
+project_url.txt
+screencast_url.txt

@@ -1,4 +1,5 @@
 env/
+flask_session/
 *.pyc
 *.db
 *.sqlite

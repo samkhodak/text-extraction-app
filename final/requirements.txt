@@ -1,5 +1,7 @@
 flask
+Flask-Session
 Pillow
+gunicorn
 
 google-api-python-client
 google-cloud
