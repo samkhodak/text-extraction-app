@@ -15,13 +15,18 @@
 
         <form action="{{ url_for('translated')}}" method="post" enctype = 'multipart/form-data'>
             <label for="language-select" class="form-label">Enter language to convert text to.</label>
-            <div class="button-row">
-                <select name="language" id="language-select">
-                    <option value="en">EN</option>
-                    <option value="sp">SP</option>
-                    <option value="fr">FR</option>
-                </select>
-                <button type="submit" class="button">Convert</button>
+            <div class="translate-row">
+                {% if (languages) %}
+                    <select name="language" class="language-select" required>
+                        <option value="" selected disabled hidden>Select a language</option>
+                        {% for lang_option in languages %}
+                            <option class="language-option" value="{{lang_option.code}}">{{lang_option.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="button">Convert</button>
+                {% else %}
+                    <p class="error-message">Something went wrong. Sorry!</p>
+                {% endif %}
             </div>
         </form>
     </div>

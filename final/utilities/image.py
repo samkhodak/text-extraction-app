@@ -10,11 +10,9 @@ def encode_image(image):
     :return: base64 bytes
 
     """
-    print(type(image))
     im = Image.open(image)
     data = io.BytesIO()
     im.save(data, "PNG")
     encoded_img_data = base64.b64encode(data.getvalue())
-    print(type(encoded_img_data))
 
     return encoded_img_data

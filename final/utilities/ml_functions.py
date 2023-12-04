@@ -1,14 +1,37 @@
-from google.cloud import vision
+from google.cloud import vision, translate
 import string
 import traceback
 import logging
+import os
 
-def text_detection(local_path): 
+def get_languages():
+    """
+    Gets a list of available languages to translate to from the translate API. 
+    :return: list of language dictionaries
+    """
+    try:
+        project_id = os.getenv("PROJECT_ID")
+        project_parent = f"projects/{project_id}"
+        client = translate.TranslationServiceClient()
+        supported_languages = client.get_supported_languages(display_language_code="en", parent=project_parent).languages
+        language_names = [dict(code=language_dict.language_code, name=language_dict.display_name) for language_dict in supported_languages]
+        return language_names
+
+
+    except Exception as exception:
+        logging.error(traceback.format_exc())
+        exception_message = str(exception)
+        print(exception_message)
+    
+
+
+
+def text_detection(image_bytes): 
 
     # with statement avoids the need for a try-catch/close and opens the file path
     # with open(local_path, "rb") as image_file:
     #     undetected_image = image_file.read()
-    undetected_image = local_path 
+    undetected_image = image_bytes 
 
     try: 
         vision_client = vision.ImageAnnotatorClient()
@@ -24,7 +47,6 @@ def text_detection(local_path):
 
     except Exception as exception:
         logging.error(traceback.format_exc())
-        # We use _ to ignore an item in a tuple.
         exception_message = str(exception)
 
         # return "An error has occurred. Please try again later."
@@ -35,7 +57,7 @@ def text_detection(local_path):
 def detect_handwriting_update_later(image_bytes): 
     vision_client = vision.ImageAnnotatorClient()
 
-    # with statement avoids the need for a try-catch/close and opens the file path
+    # with statement avoids the need for a try-catch/close and oVjpens the file path
     # with open(path, "rb") as image_file:
     #     undetected_image = image_file.read()
     undetected_image = image_bytes

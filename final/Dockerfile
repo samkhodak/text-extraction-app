@@ -1,7 +1,7 @@
 # Dockerfile for Google Cloud Run deployment.
 
 # Specifies base layer for the OS of the container.
-FROM google/cloud-sdk
+FROM python:alpine
 
 # Specifies the current maintainer of the dockerfile. This command is not necessary. 
 LABEL maintainer="khod2@pdx.edu"
@@ -13,7 +13,8 @@ COPY . /app
 WORKDIR /app
 
 # Install python packages from the requirements file in the container.
-RUN apt update -y && apt install -y python3-pip && pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
+
 
 # Set what program to execute when the container starts up, similar to entrypoint.
 # In this case, we want gunicorn to run our app/server and start up with the PORT 

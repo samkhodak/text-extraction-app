@@ -2,8 +2,6 @@
 khod2
 This is a web app to extract text from images and view operations on it. 
 """
-
-
 import flask
 import uuid
 from flask_session import Session
