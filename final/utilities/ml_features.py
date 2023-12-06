@@ -1,32 +1,75 @@
 from google.cloud import vision, translate
+from utilities.constants import SUPPORTED_LANGUAGES
 import string
 import traceback
 import logging
 import os
 
-def get_languages():
+def auto_translate_text(text: str, language_code: str):
     """
-    Gets a list of available languages to translate to from the translate API. 
-    :return: list of language dictionaries
+    Receives extracted text and translates it to the target language using 
+    translate API's auto language detection.
+    :return: dictionary including translated text and detected language.
     """
+    project_id = os.getenv("PROJECT_ID")
+    location = os.getenv("LOCATION")
+    project_parent = f"projects/{project_id}/locations/{location}"
+
     try:
-        project_id = os.getenv("PROJECT_ID")
-        project_parent = f"projects/{project_id}"
-        client = translate.TranslationServiceClient()
-        supported_languages = client.get_supported_languages(display_language_code="en", parent=project_parent).languages
-        language_names = [dict(code=language_dict.language_code, name=language_dict.display_name) for language_dict in supported_languages]
-        return language_names
+        translate_client = translate.TranslationServiceClient()
+        result = translate_client.translate_text(
+            request={
+                "parent": project_parent,
+                "contents": [text],
+                "mime_type": "text/plain",
+                "target_language_code": language_code,
+            }
+        ).translations
+
+        supported_languages = SUPPORTED_LANGUAGES
+        detected_lang_code = result[0].detected_language_code
+        lang_name = [lang["name"] for lang in supported_languages if lang["code"] == detected_lang_code]
+        
+        # It's alright to use result[0] since we don't support more than one string passed to the translation.
+        return dict(
+            translated_text = result[0].translated_text, 
+            detected_lang_code = detected_lang_code,
+            detected_lang_name = lang_name[0],
+        )
+
+    except Exception as exception:
+        logging.error(traceback.format_exc())
+        exception_message = str(exception)
+        print(exception_message)
+
+
+def detect_main_language(text: str):
+    """
+    Detects what language a piece of text is mainly in, in order to send to translation.
+    :return: list of top language codes
+    """
+    project_id = os.getenv("PROJECT_ID")
+    location = os.getenv("LOCATION")
+    project_parent = f"projects/{project_id}/locations/{location}"
+
+    try:
+        translate_client = translate.TranslationServiceClient()
+        detected_languages = translate_client.detect_language(
+            content=text,
+            parent=project_parent,
+            mime_type="text/plain",
+        ).languages
+
+        return [lang.language_code for lang in detected_languages]
 
 
     except Exception as exception:
         logging.error(traceback.format_exc())
         exception_message = str(exception)
         print(exception_message)
-    
 
 
-
-def text_detection(image_bytes): 
+def text_extraction(image_bytes: bytes): 
 
     # with statement avoids the need for a try-catch/close and opens the file path
     # with open(local_path, "rb") as image_file:
@@ -60,6 +103,7 @@ def detect_handwriting_update_later(image_bytes):
     # with statement avoids the need for a try-catch/close and oVjpens the file path
     # with open(path, "rb") as image_file:
     #     undetected_image = image_file.read()
+
     undetected_image = image_bytes
 
     vision_image = vision.Image(content = undetected_image)
@@ -85,13 +129,6 @@ def page_to_string(text_pages):
                         paragraph_text += f'{one_word} '
                 block_text += paragraph_text
             print(block_text)
-# detect_handwriting_update_later("./assets/detect_handwriting_OCR-detect-handwriting_SMALL.png") 
-# detect_handwriting_update_later("./assets/handwritten_para.png") 
-# detect_handwriting_update_later("./assets/russian_text.jpg") 
-# detect_handwriting_update_later("./assets/russian_text.webp") 
-# detect_handwriting_update_later("./assets/russian_paragraph.jpg") 
-# text_detection("./assets/russian_text.webp")
-# text_detection("./assets/japanese.jpg")
 
 
 

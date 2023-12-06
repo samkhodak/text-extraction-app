@@ -1,15 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
     <div>
-        <h1 class="title">Results for conversion</h1>
-
         <label for="original-image" class="form-label">Output</label>
         <img id="original-image" src="data:image/png;base64, {{ original_image }}">
 
         <div class="quote-card">
             <h2 class="person">Extracted Text</h2>
             <div class="result-container">
-                <p class="result-text">{{original_extracted_text}}</p>
+                <p class="result-text">{{extracted_text}}</p>
             </div>
         </div>
 

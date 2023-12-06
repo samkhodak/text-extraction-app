@@ -10,4 +10,4 @@ class Index(MethodView):
         """
         Renders the index.html page.
         """
-        return render_template('index.html')
+        return render_template('index.html', title="Image text extractor")

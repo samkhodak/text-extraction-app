@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div>
-        <h1 class="title">Welcome to the image text extractor.</h1>
-
+    <div class="container-card">
         <form action="{{ url_for('results')}}" method="post" enctype = 'multipart/form-data'>
             <label for="image-input" class="form-label">Please upload an image to convert.</label>
-            <input type="file" id="image-input" name="image" accept="image/png, image/jpeg" required />
+            <div class="container-card">
+                <div class="centering-wrapper">
+                    <input type="file" class="image-input" id="image-input" name="image" accept="image/png, image/jpeg" required />
+                </div>
+            </div>
             <div class="button-row">
                 <button type="submit" class="button">Convert</button>
                 <button type="reset" class="button">Reset</button>
