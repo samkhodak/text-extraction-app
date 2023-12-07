@@ -16,6 +16,8 @@ class Romanized(MethodView):
         if (not detected_text):
             return redirect(url_for('index'))
         
+        romanize_text(detected_text)
+        
         romanized_text = ""
 
         return render_template('romanized.html', title="Romanized results", extracted_text=detected_text, romanized_text=romanized_text)

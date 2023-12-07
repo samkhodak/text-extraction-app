@@ -27,5 +27,11 @@
                 {% endif %}
             </div>
         </form>
+        <form action="{{ url_for('romanized')}}" method="post" enctype = 'multipart/form-data'>
+            <label for="language-select" class="form-label">Attempt to romanize the text.</label>
+            <div class="translate-row">
+                <button type="submit" class="button">Convert</button>
+            </div>
+        </form>
     </div>
 {% endblock %}

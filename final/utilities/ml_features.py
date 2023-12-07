@@ -32,6 +32,7 @@ def romanize_text(text: str):
         }
         romanization_result = requests.post(romanization_url, headers=headers, json=text_content)
         romanized_dict = romanization_result.json()
+        print(romanized_dict)
         romanized_text = romanized_dict["romanizedText"]
         detected_lang_code = romanized_dict["detectedLanguageCode"]
 
