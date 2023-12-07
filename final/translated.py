@@ -20,7 +20,13 @@ class Translated(MethodView):
         target_language = request.form["language"]
 
         translated_dict = auto_translate_text(detected_text, target_language)
-        detected_language = translated_dict["detected_lang_name"]
-        translated_text = translated_dict["translated_text"]
+        detected_language = ""
+        translated_text = ""
+        if (type(translated_dict) == str):
+            detected_language = "Error"
+            translated_text = translated_dict
+        else:
+            detected_language = translated_dict["detected_lang_name"]
+            translated_text = translated_dict["translated_text"]
 
-        return render_template('translated.html', extracted_text=detected_text, translated_text=translated_text, detected_language=detected_language)
+        return render_template('translated.html', title="Translated results", extracted_text=detected_text, translated_text=translated_text, detected_language=detected_language)

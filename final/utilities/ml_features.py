@@ -3,7 +3,47 @@ from utilities.constants import SUPPORTED_LANGUAGES
 import string
 import traceback
 import logging
-import os
+import os, json, requests
+
+def romanize_text(text: str):
+    """
+    Receives extracted text and romanizes it, assuming the text is able to be romanized.
+    :return: dictionary including romanized text and detected language.
+    """
+    try:
+        # Request service account access token from GCP metadata service
+        auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+        auth_headers = {
+            "Metadata-Flavor": "Google",
+        }
+        token = requests.get(auth_url, headers=auth_headers)
+        token_dict = token.json()
+        access_token = token_dict["access_token"]
+
+        # With the access token, make a POST request to the romanization REST API.
+        project_id = os.getenv("PROJECT_ID")
+        location = os.getenv("location")
+        romanization_url = f"https://translation.googleapis.com/v3/projects/{project_id}/locations/{location}:romanizeText"
+        headers = {
+            "Authorization": f"Bearer {access_token}"
+        }
+        text_content = {
+                    "contents": text
+        }
+        romanization_result = requests.post(romanization_url, headers=headers, json=text_content)
+        romanized_dict = romanization_result.json()
+        romanized_text = romanized_dict["romanizedText"]
+        detected_lang_code = romanized_dict["detectedLanguageCode"]
+
+        print("Romanized text: ", romanized_text)
+        print("Language code: ", detected_lang_code)
+
+    except Exception as exception:
+        logging.error(traceback.format_exc())
+        exception_message = str(exception)
+        print(exception_message)
+
+
 
 def auto_translate_text(text: str, language_code: str):
     """
@@ -41,6 +81,8 @@ def auto_translate_text(text: str, language_code: str):
         logging.error(traceback.format_exc())
         exception_message = str(exception)
         print(exception_message)
+        return "An error has occurred. Please try again later!"
+
 
 
 def detect_main_language(text: str):
@@ -67,6 +109,7 @@ def detect_main_language(text: str):
         logging.error(traceback.format_exc())
         exception_message = str(exception)
         print(exception_message)
+
 
 
 def text_extraction(image_bytes: bytes): 

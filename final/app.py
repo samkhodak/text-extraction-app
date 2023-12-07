@@ -2,6 +2,7 @@
 khod2
 This is a web app to extract text from images and view operations on it. 
 """
+from romanized import Romanized
 import flask
 import uuid
 from flask_session import Session
@@ -27,6 +28,11 @@ app.add_url_rule('/results',
 app.add_url_rule('/translated',
                  view_func=Translated.as_view('translated'),
                  methods=['POST'])
+
+app.add_url_rule('/romanized',
+                 view_func=Romanized.as_view('romanized'),
+                 methods=['POST'])
+
 
 if __name__=='__main__':
   app.run(host='0.0.0.0', port=5000, debug=True)
