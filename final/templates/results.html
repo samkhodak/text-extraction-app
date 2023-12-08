@@ -1,37 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
     <div>
-        <label for="original-image" class="form-label">Output</label>
+        <label for="original-image" class="form-label">Original image</label>
         <img id="original-image" src="data:image/png;base64, {{ original_image }}">
 
-        <div class="quote-card">
-            <h2 class="person">Extracted Text</h2>
-            <div class="result-container">
-                <p class="result-text">{{extracted_text}}</p>
-            </div>
-        </div>
+        {% if (error_message) %}
 
-        <form action="{{ url_for('translated')}}" method="post" enctype = 'multipart/form-data'>
-            <label for="language-select" class="form-label">Enter language to convert text to.</label>
-            <div class="translate-row">
-                {% if (languages) %}
-                    <select name="language" class="language-select" required>
-                        <option value="" selected disabled hidden>Select a language</option>
-                        {% for lang_option in languages %}
-                            <option class="language-option" value="{{lang_option.code}}">{{lang_option.name}}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="button">Convert</button>
-                {% else %}
-                    <p class="error-message">Something went wrong. Sorry!</p>
-                {% endif %}
+            <div class="container-card">
+                <p class="error-message">{{error_message}}</p>
             </div>
-        </form>
-        <form action="{{ url_for('romanized')}}" method="post" enctype = 'multipart/form-data'>
-            <label for="language-select" class="form-label">Attempt to romanize the text.</label>
-            <div class="translate-row">
-                <button type="submit" class="button">Convert</button>
+
+        {% else %}
+
+            <div class="quote-card">
+                <h2 class="person">Extracted Text</h2>
+                <div class="result-container">
+                    <p class="result-text">{{extracted_text}}</p>
+                </div>
             </div>
-        </form>
+            <form action="{{ url_for('translated')}}" method="post" enctype = 'multipart/form-data'>
+                <label for="language-select" class="form-label">Enter language to convert text to.</label>
+                <div class="translate-row">
+                    {% if (languages) %}
+                        <select name="language" class="language-select" required>
+                            <option value="" selected disabled hidden>Select a language</option>
+                            {% for lang_option in languages %}
+                                <option class="language-option" value="{{lang_option.code}}">{{lang_option.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="button">Translate</button>
+                    {% else %}
+                        <p class="error-message">Something went wrong. Sorry!</p>
+                        <select name="language" class="language-select" disabled>
+                        <button type="submit" class="button" disabled >Convert</button>
+                    {% endif %}
+                </div>
+            </form>
+            <form action="{{ url_for('romanized')}}" method="post" enctype = 'multipart/form-data'>
+                <label for="language-select" class="form-label">Attempt to romanize the text.</label>
+                <div class="translate-row">
+                    <button type="submit" class="button">Romanize</button>
+                </div>
+            </form>
+
+        {% endif %}
     </div>
 {% endblock %}

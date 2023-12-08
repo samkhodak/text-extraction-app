@@ -3,8 +3,10 @@
     <div>
         <p class="result-text">{{extracted_text}}</p>
         <p class="translated-results">{{translated_text}}</p>
-        <p>The image's language was detected as {{detected_language}}.</p>
+        {% if (detected_language) %}
+            <p>The image's language was detected as {{detected_language}}.</p>
+        {% endif %}
 
-        <button><a href="{{url_for('results')}}">Back to previous page!</a></button>
+        <button class="button"><a href="{{url_for('results')}}">Back to previous page!</a></button>
     </div>
 {% endblock %}

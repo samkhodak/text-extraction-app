@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container-card">
         <form action="{{ url_for('results')}}" method="post" enctype = 'multipart/form-data'>
-            <label for="image-input" class="form-label">Please upload an image to convert.</label>
+            <label for="image-input" class="form-label">Upload a jpg/png image to extract text from it! You are also able to translate the image and romanize the text.</label>
             <div class="container-card">
                 <div class="centering-wrapper">
                     <input type="file" class="image-input" id="image-input" name="image" accept="image/png, image/jpeg" required />

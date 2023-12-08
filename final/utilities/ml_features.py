@@ -10,40 +10,44 @@ def romanize_text(text: str):
     Receives extracted text and romanizes it, assuming the text is able to be romanized.
     :return: dictionary including romanized text and detected language.
     """
-    try:
-        # Request service account access token from GCP metadata service
-        auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
-        auth_headers = {
-            "Metadata-Flavor": "Google",
-        }
-        token = requests.get(auth_url, headers=auth_headers)
-        token_dict = token.json()
-        access_token = token_dict["access_token"]
+    # Request service account access token from GCP metadata service
+    auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+    auth_headers = {
+        "Metadata-Flavor": "Google",
+    }
+    token = requests.get(auth_url, headers=auth_headers)
+    token_dict = token.json()
+    access_token = token_dict.get("access_token")
+    if (not access_token):
+        raise PermissionError("Access token for service account was not found in response from Google metadata service.")
 
-        # With the access token, make a POST request to the romanization REST API.
-        project_id = os.getenv("PROJECT_ID")
-        location = os.getenv("location")
-        romanization_url = f"https://translation.googleapis.com/v3/projects/{project_id}/locations/{location}:romanizeText"
-        headers = {
-            "Authorization": f"Bearer {access_token}"
-        }
-        text_content = {
-                    "contents": text
-        }
-        romanization_result = requests.post(romanization_url, headers=headers, json=text_content)
-        romanized_dict = romanization_result.json()
-        print(romanized_dict)
-        romanized_text = romanized_dict["romanizedText"]
-        detected_lang_code = romanized_dict["detectedLanguageCode"]
+    # With the access token, make a POST request to the romanization REST API.
+    project_id = os.getenv("PROJECT_ID")
+    romanization_url = f"https://translation.googleapis.com/v3/projects/{project_id}/locations/us-central1:romanizeText"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    text_content = {
+        "contents": text
+    }
+    # Make post request and raise exception if API returns a bad status code.
+    response = requests.post(romanization_url, headers=headers, json=text_content)
+    response.raise_for_status() 
+    logging.info(response)
 
-        print("Romanized text: ", romanized_text)
-        print("Language code: ", detected_lang_code)
+    response_dict = response.json().get("romanizations")
+    logging.info(response_dict)
 
-    except Exception as exception:
-        logging.error(traceback.format_exc())
-        exception_message = str(exception)
-        print(exception_message)
+    if (not response_dict):
+        raise ValueError("The program was not able to romanize the language of the text in the image. Please try a different image.")
 
+    # As of now, the API only returns one text in its list, so we use [0].
+    romanized_text = response_dict[0].get("romanizedText")
+    detected_lang_code = response_dict[0].get("detectedLanguageCode")
+
+    romanized_dict = dict(romanized_text=romanized_text, lang_code=detected_lang_code)
+    logging.info("Final romanized dictionary => ", romanized_dict)
+    return romanized_dict
 
 
 def auto_translate_text(text: str, language_code: str):
@@ -53,36 +57,30 @@ def auto_translate_text(text: str, language_code: str):
     :return: dictionary including translated text and detected language.
     """
     project_id = os.getenv("PROJECT_ID")
-    location = os.getenv("LOCATION")
-    project_parent = f"projects/{project_id}/locations/{location}"
+    project_parent = f"projects/{project_id}/locations/us-central1"
 
-    try:
-        translate_client = translate.TranslationServiceClient()
-        result = translate_client.translate_text(
-            request={
-                "parent": project_parent,
-                "contents": [text],
-                "mime_type": "text/plain",
-                "target_language_code": language_code,
-            }
-        ).translations
+    translate_client = translate.TranslationServiceClient()
+    result = translate_client.translate_text(
+        request={
+            "parent": project_parent,
+            "contents": [text],
+            "mime_type": "text/plain",
+            "target_language_code": language_code,
+        }
+    ).translations
 
-        supported_languages = SUPPORTED_LANGUAGES
-        detected_lang_code = result[0].detected_language_code
-        lang_name = [lang["name"] for lang in supported_languages if lang["code"] == detected_lang_code]
-        
-        # It's alright to use result[0] since we don't support more than one string passed to the translation.
-        return dict(
-            translated_text = result[0].translated_text, 
-            detected_lang_code = detected_lang_code,
-            detected_lang_name = lang_name[0],
-        )
+    supported_languages = SUPPORTED_LANGUAGES
+    detected_lang_code = result[0].detected_language_code
+    translated_text = result[0].translated_text
+    lang_name = [lang["name"] for lang in supported_languages if lang["code"] == detected_lang_code]
+    
+    # It's alright to use result[0] since we don't support more than one string passed to the translation.
+    return dict(
+        translated_text = translated_text,
+        detected_lang_code = detected_lang_code,
+        detected_lang_name = lang_name[0],
+    )
 
-    except Exception as exception:
-        logging.error(traceback.format_exc())
-        exception_message = str(exception)
-        print(exception_message)
-        return "An error has occurred. Please try again later!"
 
 
 
@@ -118,26 +116,19 @@ def text_extraction(image_bytes: bytes):
     # with statement avoids the need for a try-catch/close and opens the file path
     # with open(local_path, "rb") as image_file:
     #     undetected_image = image_file.read()
+
     undetected_image = image_bytes 
 
-    try: 
-        vision_client = vision.ImageAnnotatorClient()
-        vision_image = vision.Image(content = undetected_image)
+    vision_client = vision.ImageAnnotatorClient()
+    vision_image = vision.Image(content = undetected_image)
 
-        detected_response = vision_client.text_detection(image = vision_image)
+    detected_response = vision_client.text_detection(image = vision_image)
 
-        annotations = detected_response.text_annotations
-        if (not annotations):
-            raise Exception("No text could be extracted from this image. Make sure the image has text!")
-        text = annotations[0].description
-        return text
-
-    except Exception as exception:
-        logging.error(traceback.format_exc())
-        exception_message = str(exception)
-
-        # return "An error has occurred. Please try again later."
-        return exception_message
+    annotations = detected_response.text_annotations
+    if (not annotations):
+        raise ValueError("No text could be extracted from this image. Make sure the image has text!")
+    text = annotations[0].description
+    return text
 
 
 

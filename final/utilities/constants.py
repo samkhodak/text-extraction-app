@@ -25,6 +25,7 @@ def get_languages():
         logging.error(traceback.format_exc())
         exception_message = str(exception)
         print(exception_message)
+        return None
 
 # Constant for all files to use one list of supported languages per runtime. 
 SUPPORTED_LANGUAGES = get_languages()
