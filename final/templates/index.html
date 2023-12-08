@@ -1,16 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="container-card">
-        <form action="{{ url_for('results')}}" method="post" enctype = 'multipart/form-data'>
-            <label for="image-input" class="form-label">Upload a jpg/png image to extract text from it! You are also able to translate the image and romanize the text.</label>
-            <div class="container-card">
+    <div class="card-container">
+        <form class="index-form" action="{{ url_for('results')}}" method="post" enctype = 'multipart/form-data'>
+            <div class="card-header">
+                <label for="image-input" class="card-title">Upload a jpg/png image to extract text from it.</label>
+            </div>
+            <div class="card-content">
                 <div class="centering-wrapper">
                     <input type="file" class="image-input" id="image-input" name="image" accept="image/png, image/jpeg" required />
                 </div>
             </div>
-            <div class="button-row">
-                <button type="submit" class="button">Convert</button>
-                <button type="reset" class="button">Reset</button>
+            <div class="card-footer">
+                <button type="submit" class="button">EXTRACT</button>
+                <!-- <button type="reset" class="button">Reset</button> -->
             </div>
         </form>
     </div>
