@@ -27,35 +27,39 @@
                     <p class="card-text">{{extracted_text}}</p>
                 </div>
                 <div class="card-footer">
-                <div class="footer-form-row">
-                    <form class="footer-form" action="{{ url_for('translated')}}" method="post" enctype = 'multipart/form-data'>
-                        <label for="language-select" class="form-label">Translate the text</label>
-                        {% if (languages) %}
-                            <div class="translate-row">
-                                <select name="language" class="language-select" required>
-                                    <option value="" selected disabled hidden>Select a language</option>
-                                    {% for lang_option in languages %}
-                                        <option value="{{lang_option.code}}">{{lang_option.name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <button type="submit" class="button">TRANSLATE</button>
-                            </div>
-                        {% else %}
-                            <div class="translate-row">
-                                <p class="error-message">Something went wrong. Sorry!</p>
-                                <select name="language" class="language-select" disabled>
-                                <button type="submit" class="button" disabled >Convert</button>
-                            </div>
-                        {% endif %}
-                    </form>
-                    <form class="footer-form" action="{{ url_for('romanized')}}" method="post" enctype = 'multipart/form-data'>
-                        <label for="language-select" class="form-label">Romanize the text</label>
-                        <button type="submit" class="button">ROMANIZE</button>
-                    </form>
-                </div>
+                    <div class="footer-form-row">
+                        <form class="footer-form" action="{{ url_for('translated')}}" method="post" onsubmit="showLoadingIcon()" enctype = 'multipart/form-data'>
+                            <label for="language-select" class="form-label">Translate the text</label>
+                            {% if (languages) %}
+                                <div class="translate-row">
+                                    <select name="language" class="language-select" required>
+                                        <option value="" selected disabled hidden>Select a language</option>
+                                        {% for lang_option in languages %}
+                                            <option value="{{lang_option.code}}">{{lang_option.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="button">TRANSLATE</button>
+                                </div>
+                            {% else %}
+                                <div class="translate-row">
+                                    <p class="error-message">Something went wrong. Sorry!</p>
+                                    <select name="language" class="language-select" disabled>
+                                    <button type="submit" class="button" disabled >Convert</button>
+                                </div>
+                            {% endif %}
+                        </form>
+                        <form class="footer-form" action="{{ url_for('romanized')}}" method="post" onsubmit="showLoadingIcon()" enctype = 'multipart/form-data'>
+                            <label for="language-select" class="form-label">Romanize the text</label>
+                            <button type="submit" class="button">ROMANIZE</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         {% endif %}
+
+        <div id="loading-blur">
+            <div class="loading-icon"></div>
+        </div>
 
     </div>
 {% endblock %}

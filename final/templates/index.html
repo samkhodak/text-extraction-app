@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="card-container">
-        <form class="index-form" action="{{ url_for('results')}}" method="post" enctype = 'multipart/form-data'>
+        <form class="index-form" action="{{ url_for('results')}}" method="post" onsubmit="showLoadingIcon()" enctype = 'multipart/form-data'>
             <div class="card-header">
                 <label for="image-input" class="card-title">Upload a jpg/png image to extract text from it.</label>
             </div>
@@ -16,5 +16,8 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div id="loading-blur">
+        <div class="loading-icon"></div>
     </div>
 {% endblock %}
