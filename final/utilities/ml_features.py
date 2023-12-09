@@ -1,25 +1,23 @@
+"""
+This file contains all the functions for each main app feature from GCP's ML libraries (Vision, Translate)
+"""
+
 from google.cloud import vision, translate
 from utilities.constants import SUPPORTED_LANGUAGES
 import string
 import traceback
 import logging
-import os, json, requests
+import os, requests
 
 def romanize_text(text: str):
     """
     Receives extracted text and romanizes it, assuming the text is able to be romanized.
+    :param text: str
     :return: dictionary including romanized text and detected language.
     """
+
     # Request service account access token from GCP metadata service
-    auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
-    auth_headers = {
-        "Metadata-Flavor": "Google",
-    }
-    token = requests.get(auth_url, headers=auth_headers)
-    token_dict = token.json()
-    access_token = token_dict.get("access_token")
-    if (not access_token):
-        raise PermissionError("Access token for service account was not found in response from Google metadata service.")
+    access_token = get_service_access_token()
 
     # With the access token, make a POST request to the romanization REST API.
     project_id = os.getenv("PROJECT_ID")
@@ -44,16 +42,41 @@ def romanize_text(text: str):
     # As of now, the API only returns one text in its list, so we use [0].
     romanized_text = response_dict[0].get("romanizedText")
     detected_lang_code = response_dict[0].get("detectedLanguageCode")
+    supported_languages = SUPPORTED_LANGUAGES
+    lang_name = [lang["name"] for lang in supported_languages if lang["code"] == detected_lang_code]
 
-    romanized_dict = dict(romanized_text=romanized_text, lang_code=detected_lang_code)
-    logging.info("Final romanized dictionary => ", romanized_dict)
-    return romanized_dict
+    return dict(
+        romanized_text=romanized_text, 
+        detected_lang_code=detected_lang_code,
+        detected_lang_name=lang_name[0],
+    )
+
+
+def get_service_access_token():
+    """
+    Retrieves an hour-long access token for the default service account from GCP's metadata service.
+    :return: access token string
+    """
+
+    auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+    auth_headers = {
+        "Metadata-Flavor": "Google",
+    }
+    token = requests.get(auth_url, headers=auth_headers)
+    token_dict = token.json()
+    access_token = token_dict.get("access_token")
+    if (not access_token):
+        raise PermissionError("Access token for service account was not found in response from Google metadata service.")
+
+    return access_token
 
 
 def auto_translate_text(text: str, language_code: str):
     """
     Receives extracted text and translates it to the target language using 
     translate API's auto language detection.
+    :param text: str
+    :param language_code: str
     :return: dictionary including translated text and detected language.
     """
     project_id = os.getenv("PROJECT_ID")
@@ -87,6 +110,7 @@ def auto_translate_text(text: str, language_code: str):
 def detect_main_language(text: str):
     """
     Detects what language a piece of text is mainly in, in order to send to translation.
+    :param text: str
     :return: list of top language codes
     """
     project_id = os.getenv("PROJECT_ID")
@@ -112,6 +136,10 @@ def detect_main_language(text: str):
 
 
 def text_extraction(image_bytes: bytes): 
+    """
+    Takes in an image and extracts any text from it.
+    :param image_bytes: bytes
+    """
 
     # with statement avoids the need for a try-catch/close and opens the file path
     # with open(local_path, "rb") as image_file:
@@ -129,41 +157,3 @@ def text_extraction(image_bytes: bytes):
         raise ValueError("No text could be extracted from this image. Make sure the image has text!")
     text = annotations[0].description
     return text
-
-
-
-def detect_handwriting_update_later(image_bytes): 
-    vision_client = vision.ImageAnnotatorClient()
-
-    # with statement avoids the need for a try-catch/close and oVjpens the file path
-    # with open(path, "rb") as image_file:
-    #     undetected_image = image_file.read()
-
-    undetected_image = image_bytes
-
-    vision_image = vision.Image(content = undetected_image)
-
-    detected_response = vision_client.document_text_detection(image = vision_image)
-
-    final_image_text = page_to_string(detected_response.full_text_annotation.pages)    
-
-    print(final_image_text)
-
-
-def page_to_string(text_pages):
-    for page in text_pages:
-        for block in page.blocks:
-            block_text = "BLOCK: "
-            for paragraph in block.paragraphs:
-                paragraph_text = ""
-                for word in paragraph.words:
-                    one_word = "".join([symbol.text for symbol in word.symbols])
-                    if (one_word in string.punctuation):
-                        paragraph_text += one_word 
-                    else:
-                        paragraph_text += f'{one_word} '
-                block_text += paragraph_text
-            print(block_text)
-
-
-

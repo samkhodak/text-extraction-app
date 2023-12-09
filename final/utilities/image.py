@@ -1,3 +1,7 @@
+"""
+This file contains any utility functions that deal with image encoding/drawing.
+"""
+
 from PIL import Image
 import base64
 import io

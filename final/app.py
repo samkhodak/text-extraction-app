@@ -1,6 +1,6 @@
 """
 khod2
-This is a web app to extract text from images and view operations on it. 
+This is a web app to extract text from images and perform AI-powered text operations on it. 
 """
 from romanized import Romanized
 import flask

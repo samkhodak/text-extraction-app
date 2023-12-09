@@ -2,7 +2,7 @@
 This file saves constants for easy use in all app files.
 """
 import os
-from google.cloud import vision, translate
+from google.cloud import translate
 import logging
 import traceback
 

@@ -1,4 +1,5 @@
 /* Template styles */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,17 +15,10 @@ body {
 }
 
 .main {
-    /* background-color: #304662; */
     background-color: white;
     color: black;
-    /* border: 2px solid; */
-    /* border-radius: 1rem; */
     width: clamp(20rem, 80%, 80rem);
-    /* max-width: 50rem; */
-    /* min-width: 30rem; */
-    /* min-height: 50rem; */
     margin: auto;
-    /* padding: 3rem; */
     display: flex; 
     flex-direction: column;
     justify-content: space-between;
@@ -39,7 +33,6 @@ body {
 .main-title {
     white-space: nowrap;
     margin: 2rem 0 4rem 0;
-    /* font-weight: 600; */
     font-size: clamp(1.5rem, 6vw, 4rem) 
 
 }
@@ -65,14 +58,13 @@ body {
 }
 
 
+
+
 /* Index styles */
 .image-input::file-selector-button{
     margin: 2rem 1rem 2rem 0;
     padding: 2rem 2rem;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    /* box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px; */
-    /* box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em; */
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; */
+    border: 3px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
     background-color: white;
     border-radius: 6px;
@@ -81,15 +73,11 @@ body {
 
 }
 .image-input::file-selector-button:hover {
-    /* background-color: #f5f6f7; */
     border-color: black;
 }
 
 .card-container {
-    /* padding: 3rem 0; */
     margin-bottom: 3rem;
-    /* box-shadow: rgba(99, 99, 99, 0.425) 0px 2px 8px 0px; */
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 6px;
     border-radius: 10px;
 }
@@ -100,18 +88,12 @@ body {
 }
 
 .card-title {
-    /* font-weight: 300; */
     font-weight: 600;
     font-size: 1.7rem;
 }
 
 .card-content{
     padding: 5rem 5rem 6rem 5rem;
-    /* margin: 2rem 0 3rem 0; */
-    /* box-shadow: rgba(33, 35, 38, 0.15) 0px 10px 10px -10px, rgba(33, 35, 38, 0.15) 0px -10px 10px -10px; */
-    /* border-top: 3px solid rgba(0, 0, 0, 0.076); */
-
-    /* border-radius: 10px; */
 }
 
 .card-text {
@@ -122,7 +104,6 @@ body {
 .card-footer {
     padding: 3rem;
     border-top: 3px solid rgba(0, 0, 0, 0.09);
-    /* gap: 1rem; */
 }
 
 .centering-wrapper {
@@ -139,21 +120,18 @@ body {
     padding: 1rem 1.4rem;
     height: 63px;
     width: min-content;
-    /* min-width: auto; */
     white-space: nowrap;   
-    /* max-width: 200px; */
     border-radius: 30px;
     outline: none;
     text-decoration: none;
     transition: ease-in-out 300ms;
 
     &:hover {
-        /* box-shadow: rgb(255, 255, 255) 0px 2px 8px inset; */
         border-color: black;
         color: black;
-        /* transform: scale(1.03); */
     }
 }
+
 
 
 
@@ -171,13 +149,10 @@ body {
     display: block;
     margin: auto;
     max-width: 100%;
-    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
-    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 0px, rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
 }
 
 .footer-form-row {
-    /* display: inline-flex; */
     display: flex;
     flex-flow: row wrap;
     gap: 4rem;
@@ -187,7 +162,6 @@ body {
     display: flex;
     flex-flow: column nowrap;
     gap: 2rem;
-    /* width: min-content; */
     width: 100%;
     min-width: 300px;
     max-width: 45%;
@@ -211,9 +185,6 @@ body {
     font-size: 1.4rem;
     padding: 1rem 0 1rem 1rem;
     border-radius: 3px;
-    /* background-color: #3D587B; */
-    /* color: white; */
-    /* border: 2px solid #283A52; */
     border: solid 3px rgba(0, 0, 0, 0.25);
     background: white;
     color: rgba(0, 0, 0, 0.7);
@@ -228,67 +199,15 @@ body {
         color: black;
         border-color: black;
     }
-    
 }
 
 
 
-/* Translated styles */
 
-.button-link {
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
+/* Translated and Romanized styles */
 
 .text-button-row {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
 }
-
-
-
-
-/* Quotes styles */
-.quote-card {
-    padding: 0.5rem 0 2rem;
-}
-
-.person {
-    font-size: 1.3rem;
-}
-
-/* Insert styles */
-.form-container {
-    margin: 0 auto;
-    width: clamp(380px, 100%, 30rem);
-}
-
-.form-card {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-input {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.1rem;
-    color: white;
-    width: auto;
-    margin: 0.5rem 0 2rem;
-    padding: 0.5rem;
-    border: solid 1px #3D587B;
-    /* border: none; */
-    border-radius: 3px;
-    background-color: #283A52;
-
-    &:focus {
-        background-color: #1B2737;
-        transition: ease-in-out 400ms;
-    }
-}
-
-
-
