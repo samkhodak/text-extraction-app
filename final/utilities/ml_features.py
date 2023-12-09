@@ -55,6 +55,7 @@ def romanize_text(text: str):
 def get_service_access_token():
     """
     Retrieves an hour-long access token for the default service account from GCP's metadata service.
+    This function only works if the app is hosted on a Google Cloud container (Run, App Engine, Compute, etc.)
     :return: access token string
     """
 
