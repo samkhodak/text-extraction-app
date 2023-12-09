@@ -1,12 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
     <div>
-        <p class="result-text">{{extracted_text}}</p>
-        <p class="translated-results">{{translated_text}}</p>
-        {% if (detected_language) %}
-            <p>The image's language was detected as {{detected_language}}.</p>
-        {% endif %}
 
-        <button class="button"><a href="{{url_for('results')}}">Back to previous page!</a></button>
+        <div class="card-container">
+            <div class="card-header">
+                <label class="card-title">Original text</label>
+            </div>
+            <div class="card-content">
+                <p class="card-text">{{extracted_text}}</p>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card-header">
+                <label class="card-title">Translated text</label>
+            </div>
+            <div class="card-content">
+                <p class="card-text">{{translated_text}}</p>
+            </div>
+
+                <div class="card-footer">
+                    <div class="text-button-row">
+                        {% if (detected_language) %}
+                            <p class="form-label">The image's language was detected as {{detected_language}}.</p>
+                        {% endif %}
+                        <a class="button" href="{{url_for('results')}}">BACK TO RESULTS</a>
+                    </div>
+                </div>
+        </div>
+
+
     </div>
 {% endblock %}
