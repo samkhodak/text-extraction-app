@@ -1,4 +1,8 @@
-/* Template styles */
+/* ______________________________________________________
+
+   Template styles 
+   ______________________________________________________
+*/
 
 * {
     box-sizing: border-box;
@@ -19,7 +23,7 @@ body {
     color: black;
     width: clamp(20rem, 80%, 80rem);
     margin: auto;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -33,8 +37,7 @@ body {
 .main-title {
     white-space: nowrap;
     margin: 2rem 0 4rem 0;
-    font-size: clamp(1.5rem, 6vw, 4rem) 
-
+    font-size: clamp(2rem, 6vw, 4rem)
 }
 
 .home-footer {
@@ -47,7 +50,7 @@ body {
     text-decoration: none;
     transition: all 300ms ease-in-out;
 
-    &:visited { 
+    &:visited {
         color: gray;
     }
 
@@ -79,15 +82,33 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.copyright {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.3);
+    margin: auto;
+    margin-bottom: 8rem;
 }
 
 
 
 
-/* Index styles */
-.image-input::file-selector-button{
+/* ______________________________________________________
+
+   Index styles 
+   ______________________________________________________
+*/
+
+.image-input::file-selector-button {
     margin: 2rem 1rem 2rem 0;
     padding: 2rem 2rem;
     border: 3px solid rgba(0, 0, 0, 0.2);
@@ -98,6 +119,7 @@ body {
     cursor: pointer;
 
 }
+
 .image-input::file-selector-button:hover {
     border-color: black;
 }
@@ -110,7 +132,7 @@ body {
 
 .card-header {
     padding: 2.5rem 3rem;
-    border-bottom: 3px solid rgba(0, 0, 0, 0.09);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
@@ -118,7 +140,7 @@ body {
     font-size: 1.7rem;
 }
 
-.card-content{
+.card-content {
     padding: 5rem 5rem 6rem 5rem;
 }
 
@@ -129,7 +151,7 @@ body {
 
 .card-footer {
     padding: 3rem;
-    border-top: 3px solid rgba(0, 0, 0, 0.09);
+    border-top: 3px solid rgba(0, 0, 0, 0.1);
 }
 
 .centering-wrapper {
@@ -146,7 +168,7 @@ body {
     padding: 1rem 1.4rem;
     height: 63px;
     width: min-content;
-    white-space: nowrap;   
+    white-space: nowrap;
     border-radius: 30px;
     outline: none;
     text-decoration: none;
@@ -161,7 +183,12 @@ body {
 
 
 
-/* Results styles */
+
+/* ______________________________________________________
+
+   Index styles 
+   ______________________________________________________
+*/
 
 .error-message {
     font-size: 1.5rem;
@@ -175,7 +202,8 @@ body {
     display: block;
     margin: auto;
     max-width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 0px, rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 0px, 
+                rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
 }
 
 .footer-form-row {
@@ -191,7 +219,7 @@ body {
     width: 100%;
     min-width: 300px;
     max-width: 45%;
-}    
+}
 
 .form-label {
     font-size: 1.5rem;
@@ -230,10 +258,34 @@ body {
 
 
 
-/* Translated and Romanized styles */
+/* ______________________________________________________
+
+   Translated and Romanized styles 
+   ______________________________________________________
+*/
 
 .text-button-row {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+
+
+
+
+/* ______________________________________________________
+
+   404_not_found styles 
+   ______________________________________________________
+*/
+
+.error-banner {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    max-width: 570px;
+    padding: 3rem;
+    margin: 10vw auto 3rem auto;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 0px, 
+                rgba(0, 0, 0, 0.3) 0px 0px 1px 0px;
 }
