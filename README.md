@@ -23,5 +23,5 @@ It also requires a service account attached to the deployed instance with the fo
     * Cloud Vision
     * Secrets Manager
 2. Deploy application using your choice of deployment service on GCP. You can also use artifact registry to build and deploy.
-    * For Cloud Run, build an image with Cloud Build and deploy it on a new Cloud Run service, attached to the service account created.
+    * For Cloud Run, build an image with Cloud Build (using Dockerfile and cloudbuild.yaml file) and deploy it on a new Cloud Run service, attached to the service account created.
     * Add environment variables from GCP Secrets Manager.
