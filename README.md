@@ -1,5 +1,7 @@
 # text-extraction-app
 
+This app is currently deployed! [Visit this link.](https://text-extraction-app-rey5mds53q-uw.a.run.app/)
+
 ## Background
 This app was developed as part of my Internet, Web, and Cloud Systems class, where this repo was used for homework and projects. \
 **The text extraction app project is located in the `final` folder.**
