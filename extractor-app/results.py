@@ -57,11 +57,3 @@ class Results(MethodView):
             else:
                 return render_template('results.html', title="Results", original_image=encoded_image.decode('utf-8'), extracted_text=extracted_string, 
                                         languages=SUPPORTED_LANGUAGES)
-                # Put in a dictionary?
-                
-        
-
- 
-
-    
-

@@ -142,10 +142,6 @@ def text_extraction(image_bytes: bytes):
     :param image_bytes: bytes
     """
 
-    # with statement avoids the need for a try-catch/close and opens the file path
-    # with open(local_path, "rb") as image_file:
-    #     undetected_image = image_file.read()
-
     undetected_image = image_bytes 
 
     vision_client = vision.ImageAnnotatorClient()

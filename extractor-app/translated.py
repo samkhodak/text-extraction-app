@@ -1,6 +1,7 @@
 from flask import render_template, session, request, redirect, url_for
 from flask.views import MethodView
 from utilities.ml_features import auto_translate_text
+import logging, traceback
 
 class Translated(MethodView):
     """
